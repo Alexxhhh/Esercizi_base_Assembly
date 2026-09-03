@@ -1,0 +1,33 @@
+;CREARE DUE ARRAY, UNO CHE CONTIENE LA DIVISIONE E UNO CHE CONTIENE IL RESTO
+
+SECTION .DATA
+	X DW 10, -3, -7, 11, -2
+	Y DW -3, -4, 6, 20, -1
+	N EQU ($-Y)/2
+	
+SECTION .BSS
+		Z  RESW N	; z[i] = x[i]/y[i]
+		W RESW N	; w[i] = x[i]%y[i]
+		
+SECTION.TEXT
+GLOBAL START
+START:
+	XOR ESI, ESI	;i=0
+CICLO:
+	CMP ESI,N	; (i<n)?
+	JGE FINE
+	MOV AX, [X+2*ESI]
+	CWD		;ax-->dx:ax
+	MOV BX, [Y+2*ESI]
+	IDIV BX
+	MOV [Z+2*ESI], AX
+	MOV [W+ESI*2], DX
+	INC ESI,
+	JMP CICLO
+FINE:
+	EXIT 0
+	
+	
+	
+
+	

@@ -1,0 +1,25 @@
+SECTION .DATA
+x DW 12,5,-2,6,-1
+y DW 20, -16, 32, 0, 4
+n EQU ($-y)/2
+
+SECTION .BSS
+P RESD 1
+
+SECTION .TEXT
+GLOBAL _START
+_START:
+    XOR EAX, EAX
+    XOR ESI, ESI    ; i=0
+CICLO:
+    CMP ESI, n      ; (i<n)?
+    JGE FINE
+    MOVSX EBX, [x+2*ESI]
+    MOVSX ECX, [y+2*ESI]
+    IMUL EBX, ECX
+    ADD EAX, EBX
+    INC ESI
+    JMP CICLO
+FINE:
+    MOV [P], EAX
+    EXIT 0

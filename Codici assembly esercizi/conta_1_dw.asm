@@ -1,0 +1,24 @@
+SECTION .DATA
+PAR DD F723A5BEH
+
+SECTION .BSS
+COUNT RESD 1
+
+SECTION .TEXT
+GLOBAL _START
+_START:
+    XOR EAX,EAX     ; azzeriamo eax
+    MOV EBX, [PAR]
+    XOR ESI, ESI    ; i = 0
+CICLO:
+    CMP ESI, 32
+    JGE FINE
+    SHR EBX, 1
+    JNC NO
+    INC EAX
+NO:
+    INC ESI
+    JMP CICLO
+FINE:
+    MOV [CONT], EAX
+    EXIT 0
